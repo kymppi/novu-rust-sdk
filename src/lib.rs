@@ -8,6 +8,7 @@ use client::Client;
 use error::NovuError;
 use events::{TriggerPayload, TriggerResponse};
 use serde::{Deserialize, Serialize};
+use subscriber::Subscribers;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum ChannelTypeEnum {
@@ -26,12 +27,16 @@ pub struct IAttachmentOptions {
 
 pub struct Novu {
     client: Client,
+    pub subscribers: Subscribers,
 }
 
 impl Novu {
     pub fn new(api_key: impl ToString, api_url: Option<&str>) -> Result<Self, NovuError> {
+        let client = Client::new(api_key, api_url)?;
+
         Ok(Self {
-            client: Client::new(api_key, api_url)?,
+            subscribers: Subscribers::new(&client),
+            client,
         })
     }
 
