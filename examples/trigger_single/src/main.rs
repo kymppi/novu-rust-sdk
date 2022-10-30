@@ -1,4 +1,3 @@
-extern crate novu;
 use novu::{
     events::{
         AllowedPayloadValues, TriggerPayload, TriggerRecipientBuilder, TriggerRecipientsType,
@@ -6,6 +5,7 @@ use novu::{
     Novu,
 };
 use std::{collections::HashMap, env};
+
 #[async_std::main]
 async fn main() {
     let novu = Novu::new(env::var("API_TOKEN").unwrap(), None).unwrap();
